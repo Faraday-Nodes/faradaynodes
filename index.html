@@ -71,36 +71,33 @@
     .intro-overlay { position: absolute; inset: 0; pointer-events: none; }
     .intro-vignette {
       position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 68%, rgba(0,0,0,0.4) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.6) 100%);
     }
     .intro-chapter {
-      position: absolute; inset: 0; opacity: 0; padding: 48px;
-      display: flex; align-items: center; justify-content: center;
+      position: absolute; inset: 0; opacity: 0; padding: 56px;
+      display: flex; align-items: flex-end; justify-content: flex-start;
     }
-    .intro-chapter--corner { align-items: flex-end; justify-content: flex-start; }
-    .intro-hud {
-      background: rgba(8,10,14,0.62);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 14px; padding: 26px 32px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-      display: flex; flex-direction: column; align-items: center; gap: 14px;
-      text-align: center; color: #fff;
+    .intro-chapter--center { align-items: center; justify-content: center; }
+    .intro-caption { max-width: 440px; text-align: left; color: #fff; }
+    .intro-chapter--center .intro-caption { text-align: center; }
+    .intro-eyebrow {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.62);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
     }
-    .intro-chapter--corner .intro-hud { align-items: flex-start; text-align: left; max-width: 420px; }
-    .intro-logo {
-      width: 56px; height: 56px; border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    .intro-chapter--center .intro-eyebrow { justify-content: center; }
+    .intro-eyebrow .dot { width: 5px; height: 5px; border-radius: 50%; background: #5B8DFF; flex-shrink: 0; }
+    .intro-caption h2 {
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 32px; line-height: 1.2;
+      letter-spacing: -0.01em; text-shadow: 0 2px 24px rgba(0,0,0,0.4);
     }
-    .intro-title { font-size: 20px; letter-spacing: 2px; }
-    .intro-title-sm { font-size: 15px; letter-spacing: 1.5px; }
-    .intro-sub { font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.65); }
-    .intro-terminal p {
-      font-family: 'Press Start 2P', monospace; font-size: 10.5px; line-height: 2.4;
-      color: rgba(255,255,255,0.88);
+    .intro-caption--enter { opacity: 0; transform: translateY(-32px); }
+    .intro-caption--enter.intro-caption--play {
+      animation: introDropIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .intro-terminal .accent { color: #5B8DFF; }
-    .intro-terminal b { color: #fff; }
+    @keyframes introDropIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
     .intro-scroll-hint {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       z-index: 6; display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -115,9 +112,9 @@
     }
     @keyframes introArrow { to { top: 100%; } }
     @media (max-width: 900px) {
-      .intro-chapter { padding: 20px; }
-      .intro-hud { padding: 18px 20px; max-width: 100%; }
-      .intro-chapter--corner .intro-hud { max-width: 280px; }
+      .intro-chapter { padding: 28px; }
+      .intro-caption { max-width: 100%; }
+      .intro-caption h2 { font-size: 24px; }
     }
   </style>
 </head>
@@ -136,33 +133,32 @@
       <div class="intro-overlay">
         <div class="intro-vignette"></div>
         <div class="intro-chapter" data-start="0" data-end="0.16">
-          <div class="intro-hud">
-            <img src="favicon.png" alt="Faraday Nodes logo" class="intro-logo" />
-            <h1 class="intro-title pixel-logo-hero">FARADAY NODES</h1>
+          <div class="intro-caption intro-caption--enter" id="introTitleCaption">
+            <div class="intro-eyebrow"><span class="dot"></span>[~]$ faradaynodes.net</div>
+            <h2>Faraday Nodes</h2>
           </div>
         </div>
-        <div class="intro-chapter intro-chapter--corner" data-start="0.14" data-end="0.38">
-          <div class="intro-hud intro-terminal">
-            <p><span class="accent">&gt;</span> mounting compute node /srv/faraday-01</p>
-            <p><span class="accent">&gt;</span> embedded architecture ......... <b>ONLINE</b></p>
+        <div class="intro-chapter" data-start="0.14" data-end="0.38">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>01 — Architecture</div>
+            <h2>Embedded systems, online.</h2>
           </div>
         </div>
-        <div class="intro-chapter intro-chapter--corner" data-start="0.36" data-end="0.60">
-          <div class="intro-hud intro-terminal">
-            <p><span class="accent">&gt;</span> full-stack platform ......... <b>ONLINE</b></p>
-            <p><span class="accent">&gt;</span> thermal envelope ......... <b>NOMINAL</b></p>
+        <div class="intro-chapter" data-start="0.36" data-end="0.60">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>02 — Platform</div>
+            <h2>Full-stack, deployed.</h2>
           </div>
         </div>
-        <div class="intro-chapter intro-chapter--corner" data-start="0.58" data-end="0.82">
-          <div class="intro-hud intro-terminal">
-            <p><span class="accent">&gt;</span> zero-trust mesh ......... <b>ACTIVE</b></p>
-            <p><span class="accent">&gt;</span> real-time telemetry ......... <b>STREAMING</b></p>
+        <div class="intro-chapter" data-start="0.58" data-end="0.82">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>03 — Security</div>
+            <h2>Zero-trust mesh, active.</h2>
           </div>
         </div>
-        <div class="intro-chapter" data-start="0.82" data-end="1">
-          <div class="intro-hud">
-            <h2 class="intro-title-sm pixel-logo-hero">SYSTEMS ONLINE.</h2>
-            <p class="intro-sub">Engineered beyond software.</p>
+        <div class="intro-chapter intro-chapter--center" data-start="0.82" data-end="1">
+          <div class="intro-caption">
+            <h2>Systems online.</h2>
           </div>
         </div>
       </div>
@@ -520,6 +516,7 @@
     const fillEl = document.getElementById('introLoadingFill');
     const scrollHint = document.getElementById('introScrollHint');
     const chapters = Array.from(document.querySelectorAll('.intro-chapter'));
+    const titleCaption = document.getElementById('introTitleCaption');
 
     const images = new Array(FRAME_COUNT);
     let loadedCount = 0;
@@ -536,6 +533,7 @@
         ready = true;
         loadingEl.classList.add('done');
         document.body.style.overflow = '';
+        titleCaption?.classList.add('intro-caption--play');
         render();
       }
     }
@@ -612,6 +610,48 @@
 
     resizeCanvas();
     preload();
+  })();
+  </script>
+
+  <!-- Hero scroll lock: brief resistance when scrolling UP out of the hero -->
+  <script>
+  (function () {
+    const introSection = document.getElementById('intro-scroll');
+    const hero = document.querySelector('.hero');
+    if (!introSection || !hero) return;
+
+    const RESIST_ZONE = 140;
+    const RESIST_AMOUNT = 380;
+    let locked = false;
+    let resistProgress = 0;
+
+    window.addEventListener('wheel', (e) => {
+      const boundary = introSection.offsetTop + introSection.offsetHeight;
+      const y = window.scrollY;
+      const scrollingUp = e.deltaY < 0;
+      const inZone = y >= boundary - 5 && y <= boundary + RESIST_ZONE;
+
+      if (!scrollingUp || !inZone) {
+        locked = false;
+        resistProgress = 0;
+        return;
+      }
+
+      if (!locked) {
+        locked = true;
+        resistProgress = 0;
+        window.scrollTo(0, boundary);
+      }
+
+      resistProgress += -e.deltaY;
+      e.preventDefault();
+
+      if (resistProgress >= RESIST_AMOUNT) {
+        locked = false;
+        resistProgress = 0;
+        window.scrollTo(0, boundary - 40);
+      }
+    }, { passive: false });
   })();
   </script>
 
