@@ -200,7 +200,7 @@ p { font-size: 15px; color: var(--muted); line-height: 1.75; }
 
 .hero-visual {
   display: flex; align-items: center; justify-content: center;
-  padding: 60px var(--pad) 60px 24px;
+  padding: 40px calc(var(--pad) - 24px) 40px 12px;
   position: relative;
 }
 .hero-img-wrap {
