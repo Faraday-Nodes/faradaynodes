@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Faraday Nodes</title>
+  <meta name="description" content="Faraday Nodes was founded by engineers who build complete, end-to-end technical solutions from first principles." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="progress-bar" id="prog"></div>
+
+  <nav>
+    <a href="index.html" class="logo pixel-logo">[~]$ faradaynodes.net</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="careers.html">Careers</a></li>
+    </ul>
+    <a href="contact.html" class="nav-btn">Get in Touch</a>
+  </nav>
+
+  <div class="subpage-hero">
+    <span class="eyebrow">About</span>
+    <h1>The team behind<br>Faraday Nodes.</h1>
+    <p>A small engineering team building complete, end-to-end technical solutions from first principles.</p>
+  </div>
+
+  <!-- ── TEAM ───────────────────────────────────────────────────── -->
+  <section class="founders section" id="founders">
+    <div class="inner">
+      <div class="founders-grid">
+        <div class="founders-text fade-left" id="ft">
+          <span class="eyebrow">The Team</span>
+          <h2>Founded by engineers.<br>Driven by craft.</h2>
+          <p>Faraday Nodes was founded by Tawhid Kabir, Wesley Lam, and Laura Kabir. Together, they built an organization focused on delivering complete, end-to-end technical solutions.</p>
+          <p>Rather than relying on prebuilt solutions, the team approaches each project from first principles — designing and implementing systems that are tailored, efficient, and deeply integrated.</p>
+          <div class="founder-badges">
+            <div class="founder-badge">
+              <div class="founder-avatar">TK</div>
+              <div class="founder-info">
+                <p>Tawhid Kabir</p>
+                <span>Chief Technology Officer</span>
+              </div>
+            </div>
+            <div class="founder-badge">
+              <div class="founder-avatar">WL</div>
+              <div class="founder-info">
+                <p>Wesley Lam</p>
+                <span>Chief Financial Officer</span>
+              </div>
+            </div>
+            <div class="founder-badge">
+              <div class="founder-avatar">LK</div>
+              <div class="founder-info">
+                <p>Laura Kabir</p>
+                <span>Chief Executive Manager</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="founders-aside fade-right" id="fa">
+          <span class="eyebrow">Organization</span>
+          <h3>Faraday Nodes</h3>
+          <div class="aside-stat">
+            <span class="aside-stat-label">Founded</span>
+            <span class="aside-stat-val">2026</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-stat-label">Headquarters</span>
+            <span class="aside-stat-val">Albany, NY</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-stat-label">Focus</span>
+            <span class="aside-stat-val">Systems Engineering</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-stat-label">Approach</span>
+            <span class="aside-stat-val">First Principles</span>
+          </div>
+          <div class="aside-stat">
+            <span class="aside-stat-label">Contact</span>
+            <span class="aside-stat-val" style="font-size:14px">info@faradaynodes.net</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo pixel-logo">[~]$ faradaynodes.net</a>
+        <p>Systems engineering at every layer of the stack. Built from first principles, shipped with precision.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@faradaynodes.net">info@faradaynodes.net</a></li>
+          <li><a href="tel:7184276353">718 427 6353</a></li>
+          <li><a href="contact.html">Albany, NY</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Faraday Nodes. All rights reserved.</p>
+      <a href="index.html" class="footer-logo pixel-logo">[~]$ faradaynodes.net</a>
+    </div>
+  </footer>
+
+  <script>
+    const prog = document.getElementById('prog');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    }, { passive: true });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right, .principle').forEach(el => io.observe(el));
+
+    setTimeout(() => {
+      document.querySelectorAll('.subpage-hero .eyebrow, .subpage-hero h1, .subpage-hero p').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = `opacity 0.7s ease ${i * 0.12}s, transform 0.7s ease ${i * 0.12}s`;
+        requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+      });
+    }, 80);
+  </script>
+</body>
+</html>
