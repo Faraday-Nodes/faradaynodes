@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Legacy hash links: these sections moved to their own pages.
+       Runs before paint so old bookmarks land on the right page. -->
+  <script>
+    (function () {
+      var moved = { '#contact': 'contact.html', '#founders': 'about.html' };
+      var target = moved[window.location.hash];
+      if (target) window.location.replace(target);
+    })();
+  </script>
+
   <title>Faraday Nodes — Engineered Beyond Software</title>
   <meta name="description" content="Faraday Nodes designs and builds websites, custom software, and full-stack platforms — engineered from first principles." />
   <link rel="icon" type="image/png" href="favicon.png" />
