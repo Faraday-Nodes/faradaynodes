@@ -60,8 +60,11 @@
     /* ── INTRO SCROLL SEQUENCE ─────────────────────────────────── */
     #intro-scroll { position: relative; height: 500vh; background: #000; }
     .intro-sticky {
-      position: sticky; top: 0; height: 100vh; width: 100%;
-      overflow: hidden; background: #000; z-index: 850;
+      position: sticky; top: 0; width: 100%;
+      height: 100vh;
+      height: 100svh; /* avoids jump as mobile browser chrome hides/shows */
+      overflow: hidden; background: #000;
+      z-index: 1;     /* must stay under the fixed nav (z-index 800) */
     }
     #introCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .intro-loading {
@@ -117,63 +120,19 @@
     }
     @keyframes introArrow { to { top: 100%; } }
     @media (max-width: 900px) {
-      .intro-chapter { padding: 28px; }
+      /* Shorter scroll distance so the sequence isn't an endless swipe on a phone */
+      #intro-scroll { height: 300vh; }
+      .intro-chapter { padding: 28px 24px 40px; }
       .intro-caption { max-width: 100%; }
-      .intro-caption h2 { font-size: 24px; }
+      .intro-caption h2 { font-size: 22px; }
+      .intro-scroll-hint { bottom: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #intro-scroll { height: 100vh; }
     }
   </style>
 </head>
 <body>
-
-  <!-- ── INTRO SCROLL SEQUENCE ────────────────────────────────── -->
-  <section id="intro-scroll">
-    <div class="intro-sticky">
-      <canvas id="introCanvas"></canvas>
-
-      <div class="intro-loading" id="introLoading">
-        <span class="pixel-logo">[~]$ booting faradaynodes.net</span>
-        <div class="intro-loading-bar"><div class="intro-loading-fill" id="introLoadingFill"></div></div>
-      </div>
-
-      <div class="intro-overlay">
-        <div class="intro-vignette"></div>
-        <div class="intro-chapter" data-start="0" data-end="0.16">
-          <div class="intro-caption intro-caption--enter" id="introTitleCaption">
-            <div class="intro-eyebrow"><span class="dot"></span>[~]$ faradaynodes.net</div>
-            <h2>Faraday Nodes</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.14" data-end="0.38">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>01 — Architecture</div>
-            <h2>Systems, architected.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.36" data-end="0.60">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>02 — Platform</div>
-            <h2>Full-stack, deployed.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.58" data-end="0.82">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>03 — Security</div>
-            <h2>Zero-trust mesh, active.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter intro-chapter--center" data-start="0.82" data-end="1">
-          <div class="intro-caption">
-            <h2>Systems online.</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="intro-scroll-hint" id="introScrollHint">
-        <span>Scroll</span>
-        <div class="intro-scroll-arrow"></div>
-      </div>
-    </div>
-  </section>
 
   <div class="progress-bar" id="prog"></div>
 
@@ -187,7 +146,20 @@
       <li><a href="careers.html">Careers</a></li>
     </ul>
     <a href="contact.html" class="nav-btn">Get in Touch</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+      <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+    </button>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="careers.html">Careers</a></li>
+    </ul>
+    <a href="contact.html" class="nav-btn">Get in Touch</a>
+  </div>
 
   <!-- ── HERO ─────────────────────────────────────────────────── -->
   <section class="hero">
@@ -273,6 +245,56 @@
           <h3>AI &amp; Automation</h3>
           <p>Creating intelligent systems and automation tools that integrate into real-world workflows and improve operational efficiency. We build systems that make decisions based on real data, with well-defined behavior and observable outputs.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTRO SCROLL SEQUENCE ────────────────────────────────── -->
+  <section id="intro-scroll">
+    <div class="intro-sticky">
+      <canvas id="introCanvas"></canvas>
+
+      <div class="intro-loading" id="introLoading">
+        <span class="pixel-logo">[~]$ booting faradaynodes.net</span>
+        <div class="intro-loading-bar"><div class="intro-loading-fill" id="introLoadingFill"></div></div>
+      </div>
+
+      <div class="intro-overlay">
+        <div class="intro-vignette"></div>
+        <div class="intro-chapter" data-start="0" data-end="0.16">
+          <div class="intro-caption intro-caption--enter" id="introTitleCaption">
+            <div class="intro-eyebrow"><span class="dot"></span>[~]$ faradaynodes.net</div>
+            <h2>Faraday Nodes</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.14" data-end="0.38">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>01 — Architecture</div>
+            <h2>Systems, architected.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.36" data-end="0.60">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>02 — Platform</div>
+            <h2>Full-stack, deployed.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.58" data-end="0.82">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>03 — Security</div>
+            <h2>Zero-trust mesh, active.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter intro-chapter--center" data-start="0.82" data-end="1">
+          <div class="intro-caption">
+            <h2>Systems online.</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-scroll-hint" id="introScrollHint">
+        <span>Scroll</span>
+        <div class="intro-scroll-arrow"></div>
       </div>
     </div>
   </section>
@@ -418,7 +440,19 @@
   <!-- Intro scroll-sequence -->
   <script>
   (function () {
-    const FRAME_COUNT = 240;
+    const TOTAL_FRAMES = 240;
+
+    // The full sequence is ~15.5MB. On phones we sample every 4th frame
+    // (60 frames, ~4MB) — still smooth at this scroll length, far cheaper on data.
+    const isSmall = window.matchMedia('(max-width: 900px)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const STEP = reduceMotion ? 60 : (isSmall ? 4 : 1);
+
+    const frames = [];
+    for (let i = 0; i < TOTAL_FRAMES; i += STEP) frames.push(i);
+    if (frames[frames.length - 1] !== TOTAL_FRAMES - 1) frames.push(TOTAL_FRAMES - 1);
+    const FRAME_COUNT = frames.length;
+
     const introSection = document.getElementById('intro-scroll');
     const canvas = document.getElementById('introCanvas');
     const ctx = canvas.getContext('2d');
@@ -431,25 +465,28 @@
     const images = new Array(FRAME_COUNT);
     let loadedCount = 0;
     let ready = false;
+    let started = false;
 
     function frameSrc(i) {
-      return 'assets/intro/frame_' + String(i + 1).padStart(4, '0') + '.jpg';
+      return 'assets/intro/frame_' + String(frames[i] + 1).padStart(4, '0') + '.jpg';
     }
 
     function onFrameSettled() {
       loadedCount++;
       fillEl.style.width = Math.round((loadedCount / FRAME_COUNT) * 100) + '%';
+      // Start drawing as soon as the first frame lands so the panel is never blank
+      if (loadedCount === 1) render();
       if (loadedCount === FRAME_COUNT) {
         ready = true;
         loadingEl.classList.add('done');
-        document.body.style.overflow = '';
         titleCaption?.classList.add('intro-caption--play');
         render();
       }
     }
 
     function preload() {
-      document.body.style.overflow = 'hidden';
+      if (started) return;
+      started = true;
       for (let i = 0; i < FRAME_COUNT; i++) {
         const img = new Image();
         img.decoding = 'async';
@@ -460,10 +497,27 @@
       }
     }
 
+    // The sequence is no longer the first thing on the page, so don't spend the
+    // user's bandwidth until they're scrolling toward it. Driven off the scroll
+    // handler below rather than IntersectionObserver so it also works when the
+    // page is restored mid-scroll or deep-linked.
+    function maybePreload() {
+      if (started) return;
+      const rect = introSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // ~1 viewport of lead time. The section sits roughly two viewports down,
+      // so a larger margin would fire on page load and defeat the point.
+      if (rect.top < vh * 1.1 && rect.bottom > -vh) preload();
+    }
+
+    const sticky = document.querySelector('.intro-sticky');
+
     function resizeCanvas() {
+      // Measure the sticky panel, not the window — they differ on mobile
+      // where the panel uses svh and the browser chrome overlays the viewport.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      canvas.width = sticky.clientWidth * dpr;
+      canvas.height = sticky.clientHeight * dpr;
     }
 
     function drawFrame(idx) {
@@ -480,13 +534,13 @@
 
     function progress() {
       const rect = introSection.getBoundingClientRect();
-      const total = introSection.offsetHeight - window.innerHeight;
+      const total = introSection.offsetHeight - sticky.offsetHeight;
       if (total <= 0) return 1;
       return Math.min(1, Math.max(0, -rect.top / total));
     }
 
     function render() {
-      if (!ready) return;
+      if (!loadedCount) return;
       const p = progress();
       const idx = Math.min(FRAME_COUNT - 1, Math.round(p * (FRAME_COUNT - 1)));
       drawFrame(idx);
@@ -510,6 +564,8 @@
 
     let ticking = false;
     function onScroll() {
+      // Outside the rAF gate: preloading must not depend on a frame being painted.
+      maybePreload();
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => { render(); ticking = false; });
@@ -519,112 +575,41 @@
     window.addEventListener('resize', () => { resizeCanvas(); render(); });
 
     resizeCanvas();
-    preload();
+    // Measure only once layout has settled — running this during parse reports
+    // the section as far closer than it is, which defeats the lazy load.
+    if (document.readyState === 'complete') maybePreload();
+    else window.addEventListener('load', maybePreload, { once: true });
   })();
   </script>
 
-  <!-- Hero scroll lock: brief resistance when scrolling UP out of the hero -->
+
+  <!-- Mobile menu -->
   <script>
   (function () {
-    const introSection = document.getElementById('intro-scroll');
-    const hero = document.querySelector('.hero');
-    if (!introSection || !hero) return;
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('mobileMenu');
+    if (!toggle || !menu) return;
 
-    const RESIST_ZONE = 140;
-    const RESIST_AMOUNT = 380;
-    let locked = false;
-    let resistProgress = 0;
+    function setOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.classList.toggle('open', open);
+    }
 
-    window.addEventListener('wheel', (e) => {
-      const boundary = introSection.offsetTop + introSection.offsetHeight;
-      const y = window.scrollY;
-      const scrollingUp = e.deltaY < 0;
-      const inZone = y >= boundary - 5 && y <= boundary + RESIST_ZONE;
-
-      if (!scrollingUp || !inZone) {
-        locked = false;
-        resistProgress = 0;
-        return;
-      }
-
-      if (!locked) {
-        locked = true;
-        resistProgress = 0;
-        window.scrollTo(0, boundary);
-      }
-
-      resistProgress += -e.deltaY;
-      e.preventDefault();
-
-      if (resistProgress >= RESIST_AMOUNT) {
-        locked = false;
-        resistProgress = 0;
-        window.scrollTo(0, boundary - 40);
-      }
-    }, { passive: false });
-  })();
-  </script>
-
-  <!-- Contact form submission -->
-  <script>
-  (function () {
-    const ACCESS_KEY = 'bd1432a9-5489-4042-86e1-d01f882b8e17';
-
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
-    if (!form || !status) return;
-
-    const btn = form.querySelector('.form-submit');
-    const label = btn.textContent;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      status.className = 'form-status';
-      status.textContent = '';
-
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.access_key = ACCESS_KEY;
-      data.from_name = 'Faraday Nodes Website';
-      data.replyto = data.email;
-      data.subject = 'New inquiry: ' + data.topic + ' — ' + data.name;
-
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const out = await res.json();
-
-        if (out.success) {
-          form.style.display = 'none';
-          status.className = 'form-status success';
-          status.innerHTML =
-            '<strong>Message sent</strong>' +
-            "<span>We'll get back to you within one business day.</span>";
-        } else {
-          throw new Error(out.message || 'Submission failed');
-        }
-      } catch (err) {
-        status.className = 'form-status error';
-        status.innerHTML =
-          '<strong>Something went wrong</strong>' +
-          '<span>Please email us directly at ' +
-          '<a href="mailto:info@faradaynodes.net">info@faradaynodes.net</a>.</span>';
-      } finally {
-        if (form.style.display !== 'none') {
-          btn.disabled = false;
-          btn.textContent = label;
-        }
-      }
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900) setOpen(false);
     });
   })();
   </script>
-
 </body>
 </html>
 
