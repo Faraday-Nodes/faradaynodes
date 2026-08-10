@@ -417,6 +417,25 @@ p { font-size: 15px; color: var(--muted); line-height: 1.75; }
 }
 .price-cta { align-self: flex-start; }
 
+.price-note {
+  margin-top: 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 14px;
+  padding: 30px 34px;
+}
+.price-note h4 {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--faint); margin-bottom: 14px;
+}
+.price-note p { font-size: 14px; line-height: 1.75; max-width: 780px; }
+.price-note p + p { margin-top: 12px; }
+.price-note strong { font-weight: 700; color: var(--text); }
+.price-note a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.price-note a:hover { text-decoration: underline; }
+
 /* ── PHILOSOPHY ────────────────────────────────────────────────── */
 .philosophy {
   padding: 140px 0;
@@ -785,6 +804,7 @@ footer {
 
   .cap-card { padding: 32px 26px 34px; }
   .price-card { padding: 32px 26px 30px; }
+  .price-note { padding: 26px 22px; border-radius: 12px; }
   .price-cta, .pill-btn { width: 100%; justify-content: center; }
   .pricing-header { margin-bottom: 36px; }
 

@@ -119,13 +119,10 @@
       background: #fff; animation: introArrow 1.6s infinite;
     }
     @keyframes introArrow { to { top: 100%; } }
+    /* The sequence is desktop-only. Hidden here and skipped by the script,
+       so phones never download a single frame. */
     @media (max-width: 900px) {
-      /* Shorter scroll distance so the sequence isn't an endless swipe on a phone */
-      #intro-scroll { height: 300vh; }
-      .intro-chapter { padding: 28px 24px 40px; }
-      .intro-caption { max-width: 100%; }
-      .intro-caption h2 { font-size: 22px; }
-      .intro-scroll-hint { bottom: 24px; }
+      #intro-scroll { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       #intro-scroll { height: 100vh; }
@@ -249,56 +246,6 @@
     </div>
   </section>
 
-  <!-- ── INTRO SCROLL SEQUENCE ────────────────────────────────── -->
-  <section id="intro-scroll">
-    <div class="intro-sticky">
-      <canvas id="introCanvas"></canvas>
-
-      <div class="intro-loading" id="introLoading">
-        <span class="pixel-logo">[~]$ booting faradaynodes.net</span>
-        <div class="intro-loading-bar"><div class="intro-loading-fill" id="introLoadingFill"></div></div>
-      </div>
-
-      <div class="intro-overlay">
-        <div class="intro-vignette"></div>
-        <div class="intro-chapter" data-start="0" data-end="0.16">
-          <div class="intro-caption intro-caption--enter" id="introTitleCaption">
-            <div class="intro-eyebrow"><span class="dot"></span>[~]$ faradaynodes.net</div>
-            <h2>Faraday Nodes</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.14" data-end="0.38">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>01 — Architecture</div>
-            <h2>Systems, architected.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.36" data-end="0.60">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>02 — Platform</div>
-            <h2>Full-stack, deployed.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter" data-start="0.58" data-end="0.82">
-          <div class="intro-caption">
-            <div class="intro-eyebrow"><span class="dot"></span>03 — Security</div>
-            <h2>Zero-trust mesh, active.</h2>
-          </div>
-        </div>
-        <div class="intro-chapter intro-chapter--center" data-start="0.82" data-end="1">
-          <div class="intro-caption">
-            <h2>Systems online.</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="intro-scroll-hint" id="introScrollHint">
-        <span>Scroll</span>
-        <div class="intro-scroll-arrow"></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── PRICING ──────────────────────────────────────────────── -->
   <section class="pricing section section-alt" id="pricing">
     <div class="inner">
@@ -348,6 +295,63 @@
             </svg>
           </a>
         </div>
+      </div>
+
+      <div class="price-note fade-up">
+        <h4>What counts as a website</h4>
+        <p>At these rates, a <strong>website</strong> means a static site — pages, copy, images, and your contact details. It presents information; it doesn't store or process it.</p>
+        <p>Anything that handles data on an ongoing basis is a <strong>full stack system</strong>, not part of a standard site. That includes booking or scheduling, payments and checkout, user accounts and logins, databases, file or media storage, and collecting or managing submitted records. These are quoted separately.</p>
+        <p>Not sure which side your project falls on? <a href="contact.html">Tell us what you need</a> and we'll say so up front, before any work starts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTRO SCROLL SEQUENCE ────────────────────────────────── -->
+  <section id="intro-scroll">
+    <div class="intro-sticky">
+      <canvas id="introCanvas"></canvas>
+
+      <div class="intro-loading" id="introLoading">
+        <span class="pixel-logo">[~]$ booting faradaynodes.net</span>
+        <div class="intro-loading-bar"><div class="intro-loading-fill" id="introLoadingFill"></div></div>
+      </div>
+
+      <div class="intro-overlay">
+        <div class="intro-vignette"></div>
+        <div class="intro-chapter" data-start="0" data-end="0.16">
+          <div class="intro-caption intro-caption--enter" id="introTitleCaption">
+            <div class="intro-eyebrow"><span class="dot"></span>[~]$ faradaynodes.net</div>
+            <h2>Faraday Nodes</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.14" data-end="0.38">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>01 — Architecture</div>
+            <h2>Systems, architected.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.36" data-end="0.60">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>02 — Platform</div>
+            <h2>Full-stack, deployed.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter" data-start="0.58" data-end="0.82">
+          <div class="intro-caption">
+            <div class="intro-eyebrow"><span class="dot"></span>03 — Security</div>
+            <h2>Zero-trust mesh, active.</h2>
+          </div>
+        </div>
+        <div class="intro-chapter intro-chapter--center" data-start="0.82" data-end="1">
+          <div class="intro-caption">
+            <h2>Systems online.</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-scroll-hint" id="introScrollHint">
+        <span>Scroll</span>
+        <div class="intro-scroll-arrow"></div>
       </div>
     </div>
   </section>
@@ -442,11 +446,11 @@
   (function () {
     const TOTAL_FRAMES = 240;
 
-    // The full sequence is ~15.5MB. On phones we sample every 4th frame
-    // (60 frames, ~4MB) — still smooth at this scroll length, far cheaper on data.
-    const isSmall = window.matchMedia('(max-width: 900px)').matches;
+    // Sequence is hidden below 900px (see the stylesheet above). Every guard
+    // below keys off offsetHeight, so a display:none section loads nothing —
+    // and a resize up to desktop width brings it to life without a reload.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const STEP = reduceMotion ? 60 : (isSmall ? 4 : 1);
+    const STEP = reduceMotion ? 60 : 1;
 
     const frames = [];
     for (let i = 0; i < TOTAL_FRAMES; i += STEP) frames.push(i);
@@ -503,6 +507,7 @@
     // page is restored mid-scroll or deep-linked.
     function maybePreload() {
       if (started) return;
+      if (!introSection.offsetHeight) return;   // hidden (mobile) — download nothing
       const rect = introSection.getBoundingClientRect();
       const vh = window.innerHeight;
       // ~1 viewport of lead time. The section sits roughly two viewports down,
@@ -513,8 +518,8 @@
     const sticky = document.querySelector('.intro-sticky');
 
     function resizeCanvas() {
-      // Measure the sticky panel, not the window — they differ on mobile
-      // where the panel uses svh and the browser chrome overlays the viewport.
+      if (!introSection.offsetHeight) return;
+      // Measure the sticky panel rather than the window; they can differ.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = sticky.clientWidth * dpr;
       canvas.height = sticky.clientHeight * dpr;
@@ -540,7 +545,7 @@
     }
 
     function render() {
-      if (!loadedCount) return;
+      if (!loadedCount || !introSection.offsetHeight) return;
       const p = progress();
       const idx = Math.min(FRAME_COUNT - 1, Math.round(p * (FRAME_COUNT - 1)));
       drawFrame(idx);
@@ -572,7 +577,7 @@
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => { resizeCanvas(); render(); });
+    window.addEventListener('resize', () => { resizeCanvas(); maybePreload(); render(); });
 
     resizeCanvas();
     // Measure only once layout has settled — running this during parse reports
