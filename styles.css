@@ -425,10 +425,12 @@ p { font-size: 15px; color: var(--muted); line-height: 1.75; }
   border-radius: 14px;
   padding: 30px 34px;
 }
+/* Sized up and tracked in deliberately: at 12px/0.10em the antialiased
+   glyphs are nearly all edge pixels, so #111 still reads as grey. */
 .price-note h4 {
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.10em; text-transform: uppercase;
-  color: var(--text); margin-bottom: 14px;
+  font-size: 16px; font-weight: 800;
+  letter-spacing: 0.01em; text-transform: none;
+  color: #000; margin-bottom: 14px;
 }
 .price-note p { font-size: 14px; line-height: 1.75; max-width: 780px; }
 .price-note p + p { margin-top: 12px; }
